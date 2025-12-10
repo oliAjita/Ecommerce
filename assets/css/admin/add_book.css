@@ -1,0 +1,71 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+
+    /* ✅ CENTER FORM */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ✅ FORM CONTAINER */
+form {
+    width: 420px;
+    background: #fff;
+    border: 2px solid rgb(56, 3, 3);
+    padding: 25px 50px 25px 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ INNER WRAPPER */
+.add-book {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ LABEL */
+label {
+    font-weight: bold;
+    margin-top: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* ✅ INPUTS */
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    outline: none;
+    letter-spacing: 0.5px;
+}
+
+/* ✅ INPUT FOCUS EFFECT */
+input:focus,
+textarea:focus {
+    border-color: purple;
+}
+
+/* ✅ BUTTON */
+button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    background: purple;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* ✅ BUTTON HOVER */
+button:hover {
+    background: darkmagenta;
+    cursor: pointer;
+}

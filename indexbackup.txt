@@ -1,0 +1,192 @@
+<?php
+session_start();
+
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Haven - Bookstore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/index.css" />
+  <style>
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="top-header">
+        <div class="logo">Paper <span>Haven</span></div>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <!-- <li><a href="#">E-book</a></li> -->
+            <li><a href="#">About</a></li>
+            <li><a href="#">Wishlist</a></li>
+            <!-- <li><a href="#">My cart</a></li> -->
+
+          </ul>
+        </nav>
+        <div class="header-icons">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search">
+          </div>
+          <div>
+            <p><?php
+
+            echo $_SESSION['name'];
+
+            ?>
+            </p>
+          </div>
+          <div class="language-selector">
+            <span>EN</span>
+          </div>
+          <button class="logout_btn"><a href="user/login.php">Logout</a></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Find Your Next Book</h1>
+      <p>Discover a world where every page brings a new adventure. At Paper Haven, we curate a diverse collection
+        of books.</p>
+      <a href="#" class="btn">Explore Now</a>
+    </div>
+  </section>
+
+  <!-- Authors Section -->
+  <section class="authors">
+    <div class="container">
+      <h2 class="section-title">Latest from Popular Authors</h2>
+      <div class="author-cards">
+        <div class="author-card">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="James Clear">
+          <div class="author-card-content">
+            <h3>James Clear</h3>
+            <p>Author of Atomic Habits</p>
+          </div>
+        </div>
+        <div class="author-card">
+          <img
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="Napoleon Hill">
+          <div class="author-card-content">
+            <h3>Napoleon Hill</h3>
+            <p>Author of Think and Grow Rich</p>
+          </div>
+        </div>
+        <div class="author-card">
+          <img
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="Robert Kiyosaki">
+          <div class="author-card-content">
+            <h3>Robert Kiyosaki</h3>
+            <p>Author of Rich Dad Poor Dad</p>
+          </div>
+        </div>
+        <div class="author-card">
+          <img
+            src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="Brian Tracy">
+          <div class="author-card-content">
+            <h3>Brian Tracy</h3>
+            <p>Author of Eat That Frog!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Books Section -->
+  <section class="books">
+    <div class="container">
+      <h2 class="section-title">Recommended For You</h2>
+      <div class="book-grid">
+        <div class="book-card">
+          <img
+            src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="Emotional Intelligence">
+          <div class="book-card-content">
+            <h3>Emotional Intelligence</h3>
+            <p>By: Daniel Goleman</p>
+            <button class="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <img
+            src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="How to Talk to Anyone">
+          <div class="book-card-content">
+            <h3>How to Talk to Anyone</h3>
+            <p>By: Leil Lowndes</p>
+            <button class="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <img
+            src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="Who Moved My Cheese">
+          <div class="book-card-content">
+            <h3>Who Moved My Cheese</h3>
+            <p>By: Spencer Johnson</p>
+            <button class="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+        <div class="book-card">
+          <img
+            src="https://images.unsplash.com/photo-1629992101753-56d196c8aabb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            alt="The Psychology of Money">
+          <div class="book-card-content">
+            <h3>The Psychology of Money</h3>
+            <p>By: Morgan Housel</p>
+            <button class="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Paper Haven</h3>
+          <p>We are a premium bookstore offering a wide selection of books across all genres. Our mission is
+            to promote reading culture.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <p>Home</p>
+          <p>Shop</p>
+          <p>E-books</p>
+          <p>About Us</p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p>Email: info@paperhaven.com</p>
+          <p>Phone: +1 (123) 456-7890</p>
+          <p>Address: 123 Book Street, Reading, UK</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 Paper Haven. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
