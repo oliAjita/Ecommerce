@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    ;
+}
+
+/* ✅ MAIN CONTAINER */
+.details-container {
+    width: 80%;
+    margin: 50px auto;
+    background: white;
+    display: flex;
+    gap: 40px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ IMAGE SECTION */
+.details-image {
+    width: 40%;
+}
+
+.details-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* ✅ INFO SECTION */
+.details-info {
+    width: 60%;
+}
+
+.book-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.book-author {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.book-author span {
+    font-weight: bold;
+}
+
+.book-price {
+    font-size: 26px;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 20px;
+}
+
+.book-description {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* ✅ BUTTONS */
+.details-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-cart {
+    background: green;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cart:hover {
+    background: darkgreen;
+}
+
+.btn-back {
+    background: purple;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background: darkmagenta;
+}
+
+/* ✅ RESPONSIVE DESIGN */
+@media (max-width: 900px) {
+    .details-container {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .details-image,
+    .details-info {
+        width: 100%;
+    }
+}
