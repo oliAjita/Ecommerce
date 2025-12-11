@@ -26,7 +26,7 @@ $row = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <title><?php echo $row['title']; ?>Book Details</title>
-    <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/product_details.css" />
+    <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/product_details.css" />
 </head>
 
 <body>

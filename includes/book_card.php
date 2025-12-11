@@ -40,7 +40,6 @@ $result = mysqli_query($conn, $query);
 
 <!-- ✅ CSS WILL NOW WORK EVERYWHERE -->
 <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/book_card.css">
-
 <div class="book-container">
 
     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
