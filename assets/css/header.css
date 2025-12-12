@@ -32,3 +32,19 @@
 .nav-links a:hover {
     color: #ffd700;
 }
+
+
+.category-dropdown select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    background: #fff;
+    color: #4b0082;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 470px;
+}
+
+.category-dropdown select:hover {
+    background: #f0e6ff;
+}
