@@ -25,12 +25,13 @@ $row = mysqli_fetch_assoc($result);
 
 <head>
     <meta charset="UTF-8">
+
     <title><?php echo $row['title']; ?>Book Details</title>
     <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/product_details.css" />
 </head>
 
 <body>
-
+    <?php include("../../includes/header.php"); ?>
     <div class="details-container">
 
         <!-- ✅ LEFT: BOOK IMAGE -->
@@ -60,6 +61,7 @@ $row = mysqli_fetch_assoc($result);
 
     </div>
 
+    <?php include("../../includes/footer.php"); ?>
 </body>
 
 </html>

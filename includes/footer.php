@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="/ECOMMERCE/assets/css/footer.css" />
 <footer class="site-footer">
     <div class="footer-container">
         <div class="footer-box">
