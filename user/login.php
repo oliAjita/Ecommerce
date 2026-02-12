@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else {
         $error = "Invalid username or password!";
-        echo $error;
     }
 }
 ?>
@@ -47,9 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-container">
         <h2>Login to Online Book Store</h2>
         <form method="POST" action="">
-            <input type="text" name="email" placeholder="Enter email" required><br>
+            <div class="error-msg">
+                <?php echo $error ?? '' ?>
+            </div>
+            <input type="text" name="email" placeholder="Enter your email" required><br>
             <input type="password" name="password" placeholder="Enter password" required><br>
+
             <button type="submit">Login</button>
+            <p class="register">Don't have an account ? <a href="/ECOMMERCE/user/signup.php">Create one</a> </p>
         </form>
     </div>
 </body>

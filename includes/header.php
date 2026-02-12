@@ -1,12 +1,12 @@
 <?php
-include("includes/db.php");
+include("db.php");
 
 // Fetch all categories
 $cat_query = "SELECT * FROM categories ORDER BY name ASC";
 $cat_result = mysqli_query($conn, $cat_query);
 ?>
 
-<link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="/ECOMMERCE/assets/css/header.css">
 
 <header class="main-header">
     <div class="header-container">
@@ -29,10 +29,8 @@ $cat_result = mysqli_query($conn, $cat_query);
 
         <nav class="nav-links">
             <a href="/ECOMMERCE/index.php">Home</a>
-            <a href="/ECOMMERCE/shop.php">Shop</a>
             <a href="/ECOMMERCE/cart.php">Cart</a>
-            <a href="/ECOMMERCE/login.php">Login</a>
-            <a href="/ECOMMERCE/admin/dashboard.php">Admin</a>
+            <a href="/ECOMMERCE/user/login.php">Login</a>
         </nav>
 
     </div>

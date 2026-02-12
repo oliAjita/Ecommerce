@@ -35,12 +35,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="signup-container">
-        <h2>signup to online book store</h2>
+        <h2>SIGNUP TO ONLINE BOOK STORE</h2>
         <form method="POST" action="">
-            <input type="text" name="name" placeholder="name" required><br>
-            <input type="text" name="email" placeholder="email" required><br>
-            <input type="password" name="password" placeholder="password" required><br>
-            <button type="submit">signup</button>
+
+            <div>
+                <label for="name" class="name">Full Name</label>
+
+                <input type="text" name="name" placeholder="Ramesh Pathak" required><br>
+            </div>
+
+            <div>
+                <label for="email" class="email">Email</label>
+                <input type="text" name="email" placeholder="rameshpathak@gmail.com" required><br>
+
+            </div>
+
+            <div>
+                <label for="Password" class="Password">Password</label>
+                <input type="password" name="password" placeholder="********" required><br>
+
+
+            </div>
+
+            <div>
+                <button type="submit">Signup</button>
+            </div>
+
+
         </form>
     </div>
 

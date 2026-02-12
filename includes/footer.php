@@ -23,8 +23,8 @@
 
         <div class="footer-box">
             <h3>Contact Us</h3>
-            <p>Email: Bookstore@gmail.com</p>
-            <p>Phone: +977-9860681973</p>
+            <p>Email: ajita.bookstore@gmail.com</p>
+            <p>Phone: +977-9860681672</p>
             <p>Location: Nepal</p>
         </div>
 
