@@ -1,21 +1,32 @@
 <?php
 session_start();
-include(__DIR__ . "/../includes/db.php");
-$book_id = $_GET['id'];
+include("../includes/db.php");
 
-
-// Initialize cart if not created
-
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['error'] = "Please login first!";
+    header("Location: ../user/login.php");
+    exit;
 }
-//If book already in cart → increase qty
-if (isset($_SESSION['cart'][$book_id])) {
-    $_SESSION['cart'][$book_id] += 1;
+
+$user_id = $_SESSION['user_id'];
+$book_id = intval($_GET['id']);
+
+// Check if item already exists in cart
+$check_query = "SELECT * FROM cart WHERE user_id='$user_id' AND book_id='$book_id'";
+$result = mysqli_query($conn, $check_query);
+
+if (mysqli_num_rows($result) > 0) {
+    // If exists → increase quantity
+    $update_query = "UPDATE cart 
+                     SET quantity = quantity + 1 
+                     WHERE user_id='$user_id' AND book_id='$book_id'";
+    mysqli_query($conn, $update_query);
 } else {
-    $_SESSION['cart'][$book_id] = 1;
+    // If not exists → insert new row
+    $insert_query = "INSERT INTO cart (user_id, book_id, quantity) 
+                     VALUES ('$user_id', '$book_id', 1)";
+    mysqli_query($conn, $insert_query);
 }
-
 
 $_SESSION['success'] = "Item successfully added to cart!";
 header("Location: cart.php");

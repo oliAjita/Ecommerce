@@ -1,13 +1,7 @@
-<!-- <?php
+<?php
 session_start();
+$userName = $_SESSION['name'] ?? null;
 ?>
-Welcome
-<?php echo $_SESSION['name']
-  ?>
-<div>
-  <a href="./user/logout.php">Logout</a>
-</div> -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +13,7 @@ Welcome
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
 </head>
-
 
 <body>
   <?php include("includes/header.php"); ?>
@@ -30,14 +21,7 @@ Welcome
   <div>
     <?php include("includes/book_card.php"); ?>
     <?php include("includes/footer.php"); ?>
-
-
-
-
-
   </div>
-
-
 </body>
 
 </html>

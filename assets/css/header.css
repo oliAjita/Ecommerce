@@ -48,3 +48,69 @@
 .category-dropdown select:hover {
     background: #f0e6ff;
 }
+
+
+/* Profile Dropdown */
+/* Profile Dropdown */
+.profile-menu {
+    position: relative;
+    display: inline-block;
+    margin-left: 25px;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+}
+
+.profile-img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 8px;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+.profile-name {
+    color: #fff;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: #fff;
+    min-width: 170px;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+    background: #f3f3f3;
+}
+
+/* Active state */
+.dropdown-menu.show {
+    display: block;
+}
+
+.profile-icon {
+    font-size: 20px;
+    margin-right: 8px;
+    color: white;
+}

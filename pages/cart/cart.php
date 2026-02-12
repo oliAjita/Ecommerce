@@ -3,12 +3,21 @@ session_start();
 $base_url = "/ECOMMERCE";
 include("../../includes/db.php");
 
-$cart = $_SESSION['cart'] ?? [];
-$total = 0;
-if (isset($_POST['checkout'])) {
-    header("Location: checkout.php");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: $base_url/user/login.php");
     exit;
 }
+
+$user_id = $_SESSION['user_id'];
+$total = 0;
+
+// Fetch cart items from database
+$query = "SELECT c.*, b.title, b.author, b.price, b.image 
+          FROM cart c
+          JOIN books b ON c.book_id = b.id
+          WHERE c.user_id = '$user_id'";
+
+$result = mysqli_query($conn, $query);
 ?>
 
 <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/cart/cart.css">
@@ -16,119 +25,111 @@ if (isset($_POST['checkout'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
 <div class="cart-container">
 
     <div class="cart-header">
         <h1>Your Cart</h1>
-        <div class="small"><?php echo count($cart); ?> items</div>
+        <div class="small">
+            <?php echo mysqli_num_rows($result); ?> items
+        </div>
     </div>
 
-    <?php
-    if (empty($cart)) {
-        echo "<div class='cart-empty'><h2>Your cart is empty!</h2></div>";
-        exit;
-    }
-    ?>
+    <?php if (mysqli_num_rows($result) == 0) { ?>
+        <div class="cart-empty">
+            <h2>Your cart is empty!</h2>
+        </div>
+    <?php } else { ?>
 
-    <div class="cart-layout">
+        <div class="cart-layout">
 
-        <!-- CART ITEMS -->
-        <div class="cart-items">
-            <table class="cart-table">
-                <thead>
-                    <tr>
-                        <th>Book</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Subtotal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <?php
-                    foreach ($cart as $book_id => $qty) {
-                        $query = "SELECT * FROM books WHERE id=$book_id";
-                        $result = mysqli_query($conn, $query);
-                        $book = mysqli_fetch_assoc($result);
-
-                        $subtotal = $book['price'] * $qty;
-                        $total += $subtotal;
-                        ?>
-
+            <div class="cart-items">
+                <table class="cart-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <div class="cart-product">
-                                    <img src="<?php echo $base_url; ?>/admin/images/<?php echo $book['image']; ?>" alt="">
-                                    <div class="prod-info">
-                                        <h4><?php echo $book['title']; ?></h4>
-                                        <p><?php echo $book['author']; ?></p>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="qty-controls">
-                                    <form action="update_qty.php" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $book_id; ?>">
-                                        <button name="action" value="minus">-</button>
-                                        <input type="text" value="<?php echo $qty; ?>" disabled>
-                                        <button name="action" value="plus">+</button>
-                                    </form>
-                                </div>
-                            </td>
-
-                            <td class="cart-price">Rs <?php echo $book['price']; ?></td>
-
-                            <td class="cart-subtotal">Rs <?php echo $subtotal; ?></td>
-
-                            <td>
-                                <form action="remove_item.php" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $book_id; ?>">
-                                    <button class="btn-remove">Remove</button>
-                                </form>
-                            </td>
+                            <th>Book</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                            <th></th>
                         </tr>
+                    </thead>
+                    <tbody>
 
-                    <?php } ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)) {
+                            $subtotal = $row['price'] * $row['quantity'];
+                            $total += $subtotal;
+                            ?>
 
-                </tbody>
-            </table>
+                            <tr>
+                                <td>
+                                    <div class="cart-product">
+                                        <img src="<?php echo $base_url; ?>/admin/images/<?php echo $row['image']; ?>">
+                                        <div class="prod-info">
+                                            <h4>
+                                                <?php echo $row['title']; ?>
+                                            </h4>
+                                            <p>
+                                                <?php echo $row['author']; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <?php echo $row['quantity']; ?>
+                                </td>
+
+                                <td>Rs
+                                    <?php echo $row['price']; ?>
+                                </td>
+
+                                <td>Rs
+                                    <?php echo $subtotal; ?>
+                                </td>
+
+                                <td>
+                                    <form action="remove_item.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $row['book_id']; ?>">
+                                        <button class="btn-remove">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <aside class="cart-summary">
+                <h3>Order Summary</h3>
+
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>Rs
+                        <?php echo $total; ?>
+                    </span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>Rs
+                        <?php echo $total; ?>
+                    </span>
+                </div>
+
+                <a href="checkout.php" class="btn-checkout">← Proceed to Checkout</a>
+                <a href="<?php echo $base_url; ?>/index.php" class="continue-link">← Continue Shopping</a>
+            </aside>
+
         </div>
 
-        <!-- CART SUMMARY -->
-        <aside class="cart-summary">
-            <h3>Order Summary</h3>
-
-            <div class="summary-row">
-                <span>Subtotal:</span>
-                <span>Rs <?php echo $total; ?></span>
-            </div>
-
-            <div class="summary-row total">
-                <span>Total:</span>
-                <span>Rs <?php echo $total; ?></span>
-            </div>
-
-            <!-- <button class="btn-checkout" name="checkout">Proceed to Checkout</button> -->
-            <a href="checkout.php" class="btn-checkout">← Proceed to Checkout</a>
-
-
-            <a href="<?php echo $base_url; ?>/index.php" class="continue-link">← Continue Shopping</a>
-        </aside>
-
-    </div>
+    <?php } ?>
 </div>
+
 <?php
 if (isset($_SESSION['success'])) {
-    $msg = $_SESSION['success'];
-    echo "<script>
-            $(document).ready(function() {
-                toastr.success('$msg');
-            });
-          </script>";
+    echo "<script>toastr.success('" . $_SESSION['success'] . "');</script>";
     unset($_SESSION['success']);
 }
 ?>

@@ -2,13 +2,12 @@
 session_start();
 include("../includes/db.php");
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    // user is NOT admin
+if (!isset($_SESSION['admin_role']) || $_SESSION['admin_role'] !== 'admin') {
     header("Location: ../user/login.php");
     exit();
 }
 
-// Determine the current page
+// Determine current page
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 // Handle logout
@@ -21,6 +20,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 
 // Handle add book
 if ($page == 'add_book' && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $title =
+        $author =
+        $price =
+        $description = '';
+
     $title = $_POST['title'];
     $author = $_POST['author'];
     $price = $_POST['price'];
@@ -137,19 +141,24 @@ if ($page == 'users') {
                         <div class="add-book">
                             <div class="form-group">
                                 <label>Book Title</label>
-                                <input type="text" name="title" required>
+                                <input type="text" name="title"
+                                    value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Author</label>
-                                <input type="text" name="author" required>
+                                <input type="text" name="author"
+                                    value="<?php echo isset($_POST['author']) ? $_POST['author'] : '' ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" step="0.01" name="price" required>
+                                <input type="number" step="0.01" name="price"
+                                    value="<?php echo isset($_POST['price']) ? $_POST['price'] : '' ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="description" required></textarea>
+                                <textarea name="description"
+                                    value="<?php echo isset($_POST['description']) ? $_POST['description'] : '' ?>"
+                                    required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Book Image</label>
@@ -188,7 +197,7 @@ if ($page == 'users') {
                                             <td><?php echo $book['id']; ?></td>
                                             <td><?php echo htmlspecialchars($book['title']); ?></td>
                                             <td><?php echo htmlspecialchars($book['author']); ?></td>
-                                            <td>$<?php echo number_format($book['price'], 2); ?></td>
+                                            <td>Rs <?php echo number_format($book['price'], 2); ?></td>
                                             <td>
                                                 <?php if (!empty($book['image'])): ?>
                                                     <img src="images/<?php echo htmlspecialchars($book['image']); ?>" alt="Book"
@@ -198,11 +207,23 @@ if ($page == 'users') {
                                                 <?php endif; ?>
                                             </td>
                                             <td><?php echo date('M d, Y', strtotime($book['created_at'])); ?></td>
+                                            <!-- <td>
+                                                <a href="dashboard.php?page=products&action=delete&id=<?php echo $book['id']; ?>"
+                                                    class="action-btn btn-delete"
+                                                    onclick="return confirm('Delete this product?');">Delete</a>
+                                            </td> -->
+
                                             <td>
+                                                <!-- Edit Button -->
+                                                <a href="edit_product.php?id=<?php echo $book['id']; ?>"
+                                                    class="action-btn btn-edit">Edit</a>
+
+                                                <!-- Delete Button -->
                                                 <a href="dashboard.php?page=products&action=delete&id=<?php echo $book['id']; ?>"
                                                     class="action-btn btn-delete"
                                                     onclick="return confirm('Delete this product?');">Delete</a>
                                             </td>
+
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -228,8 +249,9 @@ if ($page == 'users') {
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
+                                        <th>Role</th>
+                                        <!-- <th>Phone</th> -->
+                                        <!-- <th>Address</th> -->
                                         <th>Created At</th>
                                         <th>Actions</th>
                                     </tr>
@@ -240,8 +262,11 @@ if ($page == 'users') {
                                             <td><?php echo $user['id']; ?></td>
                                             <td><?php echo htmlspecialchars($user['name']); ?></td>
                                             <td><?php echo htmlspecialchars($user['email']); ?></td>
-                                            <td><?php echo htmlspecialchars($user['phone'] ?? 'N/A'); ?></td>
-                                            <td><?php echo htmlspecialchars(substr($user['address'] ?? '', 0, 50)); ?></td>
+                                            <td><?php echo htmlspecialchars(string: $user['role']); ?></td>
+
+
+                                            <!-- <td><?php echo htmlspecialchars($user['phone'] ?? 'N/A'); ?></td> -->
+                                            <!-- <td><?php echo htmlspecialchars(substr($user['address'] ?? '', 0, 50)); ?></td> -->
                                             <td><?php echo date('M d, Y', strtotime($user['created_at'])); ?></td>
                                             <td>
                                                 <a href="dashboard.php?page=users&action=delete&id=<?php echo $user['id']; ?>"

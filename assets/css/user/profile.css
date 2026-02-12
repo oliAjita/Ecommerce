@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+.profile-container {
+    width: 500px;
+    margin: 60px auto;
+}
+
+.profile-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-card,
+.profile-form {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info p {
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.edit-btn,
+.save-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #4b0082;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn:hover,
+.save-btn:hover {
+    background: #360061;
+}
+
+.profile-form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 500;
+}
+
+.profile-form input,
+.profile-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.profile-form textarea {
+    resize: none;
+    height: 80px;
+}
