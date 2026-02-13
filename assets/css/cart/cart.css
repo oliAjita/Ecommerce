@@ -278,3 +278,26 @@
 .prod-info h4 {
     word-break: break-word;
 }
+
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #333;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.qty-input {
+    width: 40px;
+    text-align: center;
+    height: 30px;
+}

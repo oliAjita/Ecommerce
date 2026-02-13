@@ -21,7 +21,7 @@ $userName = $_SESSION['name'] ?? null;
   <div>
     <?php include("includes/book_card.php"); ?>
     <?php include("includes/footer.php"); ?>
-  </div>
+</div>
 </body>
 
 </html>

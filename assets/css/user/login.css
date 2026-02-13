@@ -120,3 +120,18 @@ body {
 .login-container a:hover {
     text-decoration: underline;
 }
+
+/* dropdown */
+
+    #signup-text {
+      margin-top: 10px;
+      color: #555;
+    }
+
+    #role{
+        font-size: large;
+        font: bold;
+        border-radius: 5px ;
+        padding: 3px;
+        width: 30%;
+    }

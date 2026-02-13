@@ -45,7 +45,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
                     <div class="dropdown-menu" id="profileDropdown">
                         <a href="/ECOMMERCE/user/profile.php">Profile</a>
-                        <a href="/ECOMMERCE/pages/orders/my_orders.php">My Orders</a>
+                        <a href="/ECOMMERCE/user/orders.php">My Orders</a>
                         <a href="/ECOMMERCE/user/logout.php">Logout</a>
                     </div>
                 </div>

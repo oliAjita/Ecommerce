@@ -24,11 +24,13 @@ if ($page == 'add_book' && $_SERVER["REQUEST_METHOD"] == "POST") {
         $author =
         $price =
         $description = '';
+        $quantity= '';
 
     $title = $_POST['title'];
     $author = $_POST['author'];
     $price = $_POST['price'];
     $description = $_POST['description'];
+    $quantity= $_POST['quantity'];
 
     if ($_FILES['photo']['error'] == 0) {
         if ($_FILES['photo']['size'] < 500000) {
@@ -113,6 +115,8 @@ if ($page == 'users') {
                     Book</a>
                 <a href="dashboard.php?page=products" class="<?php echo $page == 'products' ? 'active' : ''; ?>">📚
                     Products</a>
+                    <a href="dashboard.php?page=orders" class="<?php echo $page == 'orders' ? 'active' : ''; ?>">📚
+                    Orders</a>
                 <a href="dashboard.php?page=users" class="<?php echo $page == 'users' ? 'active' : ''; ?>">👥 Users</a>
                 <div class="logout-btn">
                     <a href="dashboard.php?action=logout">🚪 Logout</a>
@@ -159,6 +163,11 @@ if ($page == 'users') {
                                 <textarea name="description"
                                     value="<?php echo isset($_POST['description']) ? $_POST['description'] : '' ?>"
                                     required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" step="0.01" name="quantity"
+                                    value="<?php echo isset($_POST['quantity']) ? $_POST['quantity'] : '' ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Book Image</label>
@@ -235,6 +244,19 @@ if ($page == 'users') {
                         </div>
                     <?php endif; ?>
                 </div>
+
+                <!-- //orders block -->
+                           <?php elseif ($page == 'orders'): ?>
+                <div class="header">
+                    <h1>Manage Orders</h1>
+                </div>
+                <div class="content-section">
+                    <?php include("orders.php"); ?>
+                </div>
+                                
+
+
+                <!-- //up to here -->
 
             <?php elseif ($page == 'users'): ?>
                 <div class="header">
