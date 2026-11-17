@@ -1,4 +1,8 @@
 /* Cart page styling - BookStore theme */
+body{
+    margin: 0;
+    padding: 0;
+}
 :root {
     --purple: #4b0082;
     --purple-dark: #3b006e;
@@ -300,4 +304,15 @@
     width: 40px;
     text-align: center;
     height: 30px;
+}
+
+
+.btn-confirm{
+    padding: 8px;
+    margin:15px 5px;
+    border: 1px solid brown ;
+    border-radius: 5px;
+    background-color: purple;
+    color: white;
+    cursor: pointer;
 }

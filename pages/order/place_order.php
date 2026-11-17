@@ -13,14 +13,14 @@ $user_id = $_SESSION['user_id'];
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Collect and sanitize form data
-    $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $city = mysqli_real_escape_string($conn, $_POST['city']);
-    $pincode = mysqli_real_escape_string($conn, $_POST['pincode'] ?? '');
-    $payment_method = mysqli_real_escape_string($conn, $_POST['payment']);
+    // Collect form data
+    $fullname = $_POST['fullname'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $pincode = $_POST['pincode'] ?? '';
+    $payment_method = $_POST['payment'];
 
     // Retrieve cart items
     $cart_query = "SELECT c.book_id, c.quantity, b.price, b.title 
@@ -41,14 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $quantity = $row['quantity'];
         $total_amount = $row['price'] * $quantity;
 
-        $stmt = $conn->prepare("INSERT INTO orders (user_id, fullname, email, phone, address, city, pincode, payment_method, total_amount, book_name, total_quantity, order_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt = $conn->prepare("INSERT INTO orders (user_id,book_id, fullname, email, phone, address, city, pincode, payment_method, total_amount, book_name, total_quantity, order_date) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         if (!$stmt) {
             die("Prepare failed: " . $conn->error);
         }
 
         $stmt->bind_param(
-            "isssssssdsi",
+            "iisssssssdsi",
             $user_id,
+            $book_id,
             $fullname,
             $email,
             $phone,
@@ -67,8 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Clear user's cart
     mysqli_query($conn, "DELETE FROM cart WHERE user_id = $user_id");
+    $_SESSION['success']="Order placed successfully";
+    header("location:../../index.php");
 
-    echo "<h2>Order placed successfully!</h2>";
+    // echo "<h2>Order placed successfully!</h2>";
     exit;
 }
 ?>

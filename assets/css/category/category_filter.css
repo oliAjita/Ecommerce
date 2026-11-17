@@ -1,0 +1,88 @@
+/* ================================
+   CATEGORY PAGE STYLING
+================================ */
+
+/* Page Header */
+.header {
+    text-align: center;
+    margin: 30px auto 10px;
+    padding: 10px 20px;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.header p {
+    color: #666;
+    font-size: 15px;
+}
+
+/* Book container spacing override */
+.book-container {
+    max-width: 1200px;
+    margin: 30px auto 60px;
+    padding: 0 15px;
+}
+
+/* No books message */
+.book-container p {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+    margin-top: 40px;
+}
+
+/* Smooth card hover animation */
+.book-card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* Price tag improvement */
+.price-tag {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Out of stock label improvement */
+.out-of-stock-tag {
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background: #e53935;
+    color: #fff;
+}
+
+/* Buttons improvement */
+.book-buttons button {
+    transition: all 0.15s ease;
+}
+
+.btn-cart:hover:not(:disabled) {
+    background: #1976d2;
+}
+
+.btn-details:hover {
+    background: #444;
+    color: #fff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .book-container {
+        margin-top: 15px;
+    }
+
+}

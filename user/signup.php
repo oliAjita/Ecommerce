@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email_err = "Email is required";
     } else {
         $email = trim($_POST['email']);
-        // Nepali email regex standard
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $email_err = "Invalid email format";
         }
@@ -50,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phone_err = "Phone number is required";
     } else {
         $phone = trim($_POST['phone']);
-        // Nepali phone number format: starts with 9, then 9 digits, or +977
         if (!preg_match("/^(?:\+977)?9\d{9}$/", $phone)) {
             $phone_err = "Invalid phone number";
         }
@@ -70,30 +68,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $city = trim($_POST['city']);
     }
 
-    // If no errors, insert into database
+    // ✅ If no validation errors → check duplicate email & phone
     if (empty($name_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err) && empty($phone_err) && empty($address_err) && empty($city_err)) {
-        $hashed_password = md5($password);
 
-        $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone, address, city) VALUES (?, ?, ?, ?, ?, ?)");
-        if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
+        // Check existing email
+        $check_email = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $check_email->bind_param("s", $email);
+        $check_email->execute();
+        $check_email->store_result();
+
+        if ($check_email->num_rows > 0) {
+            $email_err = "Email already registered";
         }
-        $stmt->bind_param("ssssss", $name, $email, $hashed_password, $phone, $address, $city);
+        $check_email->close();
 
-        if ($stmt->execute()) {
-            echo 'Successfully registered';
-            header("Location: ../index.php");
-            exit();
-        } else {
-            echo "Error: " . $stmt->error;
+        // Check existing phone
+        $check_phone = $conn->prepare("SELECT id FROM users WHERE phone = ?");
+        $check_phone->bind_param("s", $phone);
+        $check_phone->execute();
+        $check_phone->store_result();
+
+        if ($check_phone->num_rows > 0) {
+            $phone_err = "Phone number already registered";
         }
+        $check_phone->close();
 
-        $stmt->close();
+        // If still no duplicate errors → insert user
+        if (empty($email_err) && empty($phone_err)) {
+
+            $hashed_password = md5($password);
+
+            $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone, address, city) VALUES (?, ?, ?, ?, ?, ?)");
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
+
+            $stmt->bind_param("ssssss", $name, $email, $hashed_password, $phone, $address, $city);
+
+            if ($stmt->execute()) {
+                header("Location: ../index.php");
+                exit();
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
     }
 
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

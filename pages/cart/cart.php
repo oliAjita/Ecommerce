@@ -10,7 +10,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];/////////////
+$user_id = $_SESSION['user_id'];
+
 if (isset($_POST['confirm_change'])) {
 
     foreach ($_POST['quantity'] as $book_id => $new_qty) {
@@ -18,27 +19,30 @@ if (isset($_POST['confirm_change'])) {
         $book_id = intval($book_id);
         $new_qty = intval($new_qty);
 
+        //get current book stock
+
+
         // Get current cart quantity
-        $cart_query = mysqli_query($conn, "SELECT quantity FROM cart 
-                                           WHERE user_id='$user_id' AND book_id='$book_id'");
-        $cart_data = mysqli_fetch_assoc($cart_query);
-        $current_qty = $cart_data['quantity'];
+        // $cart_query = mysqli_query($conn, "SELECT quantity FROM cart 
+        //                                    WHERE user_id='$user_id' AND book_id='$book_id'");
+        // $cart_data = mysqli_fetch_assoc($cart_query);
+        // $current_qty = $cart_data['quantity'];
 
         // Difference
-        $difference = $new_qty - $current_qty;
+        // $difference = $new_qty - $current_qty;
 
-        if ($difference > 0) {
-            // Increase cart, decrease stock
-            mysqli_query($conn, "UPDATE books 
-                                 SET stock = stock - $difference 
-                                 WHERE id='$book_id'");
-        } elseif ($difference < 0) {
-            // Decrease cart, increase stock
-            $abs_diff = abs($difference);
-            mysqli_query($conn, "UPDATE books 
-                                 SET stock = stock + $abs_diff 
-                                 WHERE id='$book_id'");
-        }
+        // if ($difference > 0) {
+        //     // Increase cart, decrease stock
+        //     mysqli_query($conn, "UPDATE books 
+        //                          SET stock = stock - $difference 
+        //                          WHERE id='$book_id'");
+        // } elseif ($difference < 0) {
+        //     // Decrease cart, increase stock
+        //     $abs_diff = abs($difference);
+        //     mysqli_query($conn, "UPDATE books 
+        //                          SET stock = stock + $abs_diff 
+        //                          WHERE id='$book_id'");
+        // }
 
         // Update cart quantity
         mysqli_query($conn, "UPDATE cart 
@@ -54,7 +58,7 @@ if (isset($_POST['confirm_change'])) {
 $total = 0;
 
 // Fetch cart items from database
-$query = "SELECT c.*, b.title, b.author, b.price, b.image 
+$query = "SELECT c.*, b.title, b.author, b.price, b.image ,b.stock
           FROM cart c
           JOIN books b ON c.book_id = b.id
           WHERE c.user_id = '$user_id'";
@@ -113,13 +117,19 @@ $result = mysqli_query($conn, $query);
                                     </td>
 
                                     <td>
-                                        <div class="qty-controls">
-                                            <button type="button" class="minus-btn">-</button>
+                                        <div class="qty-controls" data-stock="<?php echo $row['stock']; ?>">
+                                            <button type="button" class="minus-btn" <?php echo ($row['quantity'] <= 1) ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''; ?>>-</button>
+
                                             <input type="number" name="quantity[<?php echo $row['book_id']; ?>]"
-                                                value="<?php echo $row['quantity']; ?>" min="1">
-                                            <button type="button" class="plus-btn">+</button>
+                                                value="<?php echo $row['quantity']; ?>" min="1"
+                                                max="<?php echo $row['stock']; ?>" readonly>
+
+                                            <button type="button" class="plus-btn" <?php echo ($row['quantity'] >= $row['stock']) ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''; ?>>
+                                                +
+                                            </button>
                                         </div>
                                     </td>
+
 
 
                                     <td>Rs <?php echo $row['price']; ?></td>
@@ -138,7 +148,7 @@ $result = mysqli_query($conn, $query);
                         </tbody>
                     </table>
                     <button type="submit" name="confirm_change" class="btn-confirm">
-                        Confirm Change
+                        Apply Changes
                     </button>
                 </form>
 
@@ -176,29 +186,83 @@ include("../../includes/footer.php");
 
 ?>
 <script>
-    document.querySelectorAll(".plus-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-            let input = this.parentElement.querySelector("input");
-            input.value = parseInt(input.value) + 1;
-        });
-    });
+    // document.querySelectorAll(".plus-btn").forEach(btn => {
+    //     btn.addEventListener("click", function () {
+    //         let input = this.parentElement.querySelector("input");
+    //         input.value = parseInt(input.value) + 1;
+    //     });
+    // });
 
-    document.querySelectorAll(".minus-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-            let input = this.parentElement.querySelector("input");
-            if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
+    // document.querySelectorAll(".minus-btn").forEach(btn => {
+    //     btn.addEventListener("click", function () {
+    //         let input = this.parentElement.querySelector("input");
+    //         if (parseInt(input.value) > 1) {
+    //             input.value = parseInt(input.value) - 1;
+    //         }
+    //     });
+    // });
+
+    document.querySelectorAll('.qty-controls').forEach(function (container) {
+        const minusBtn = container.querySelector('.minus-btn');
+        const plusBtn = container.querySelector('.plus-btn');
+        const input = container.querySelector('input');
+        const stock = parseInt(container.dataset.stock);
+
+        // Increase quantity
+        plusBtn.addEventListener('click', function () {
+            let current = parseInt(input.value);
+            console.log('current' + current);
+            if (current < stock) {
+                current++;
+                input.value = current;
+            }
+
+            // Disable + if reached stock
+            if (current >= stock) {
+                plusBtn.disabled = true;
+                plusBtn.style.opacity = 0.5;
+                plusBtn.style.cursor = 'not-allowed';
+            }
+
+            // Enable - button if quantity > 1
+            if (current > 1) {
+                minusBtn.disabled = false;
+                minusBtn.style.opacity = 1;
+                minusBtn.style.cursor = 'pointer';
+            }
+        });
+
+        // Decrease quantity
+        minusBtn.addEventListener('click', function () {
+            let current = parseInt(input.value);
+            if (current > 1) {
+                current--;
+                input.value = current;
+            }
+
+            // Disable - if quantity == 1
+            if (current <= 1) {
+                minusBtn.disabled = true;
+                minusBtn.style.opacity = 0.5;
+                minusBtn.style.cursor = 'not-allowed';
+            }
+
+            // Enable + button if quantity < stock
+            if (current < stock) {
+                plusBtn.disabled = false;
+                plusBtn.style.opacity = 1;
+                plusBtn.style.cursor = 'pointer';
             }
         });
     });
 
     document.querySelectorAll(".btn-remove").forEach(btn => {
-    btn.addEventListener("click", function() {
-        let bookId = this.getAttribute("data-book-id");
-        if (confirm("Are you sure you want to remove this item?")) {
-            window.location.href = "remove_item.php?id=" + bookId;
-        }
+        btn.addEventListener("click", function () {
+            let bookId = this.getAttribute("data-book-id");
+            if (confirm("Are you sure you want to remove this item?")) {
+                window.location.href = "remove_item.php?id=" + bookId;
+            }
+        });
     });
-});
 
 </script>

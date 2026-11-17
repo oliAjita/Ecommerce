@@ -1,0 +1,61 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+h2 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+.status-pending{
+    color: orange;
+    font-weight: bold;
+}
+
+.status-accept{
+    color: green;
+    font-weight: bold;
+}
+
+.status-reject{
+    color: red;
+    font-weight: bold;
+}
+
+.status-cancelled{
+    color: #888;
+    font-weight: bold;
+}
+
+.btn-cancel{
+    background:#dc3545;
+    color:#fff;
+    padding:6px 12px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-cancel:hover{
+    background:#b52a37;
+}
+

@@ -15,11 +15,18 @@ $book_id = intval($_GET['id']);
 $stock_query = mysqli_query($conn, "SELECT stock FROM books WHERE id='$book_id'");
 $book = mysqli_fetch_assoc($stock_query);
 
+if (!$book) {
+    $_SESSION['error'] = "Book not found!";
+    header("Location: cart.php");
+    exit;
+}
+
 if ($book['stock'] <= 0) {
     $_SESSION['error'] = "Product out of stock!";
     header("Location: cart.php");
     exit;
 }
+
 
 // Check if item already exists in cart
 $check_query = "SELECT * FROM cart WHERE user_id='$user_id' AND book_id='$book_id'";
@@ -35,11 +42,6 @@ if (mysqli_num_rows($result) > 0) {
     mysqli_query($conn, "INSERT INTO cart (user_id, book_id, quantity) 
                          VALUES ('$user_id', '$book_id', 1)");
 }
-
-// Decrease stock in books table
-mysqli_query($conn, "UPDATE books 
-                     SET stock = stock - 1 
-                     WHERE id='$book_id'");
 
 $_SESSION['success'] = "Item successfully added to cart!";
 header("Location: cart.php");

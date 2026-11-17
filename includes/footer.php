@@ -1,3 +1,4 @@
+<?php $base_url="/ECOMMERCE";?>
 <link rel="stylesheet" href="/ECOMMERCE/assets/css/footer.css" />
 <footer class="site-footer">
     <div class="footer-container">
@@ -9,14 +10,15 @@
             </p>
         </div>
 
-
         <div class="footer-box">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="shop.php">Shop</a></li>
-                <li><a href="cart.php">Cart</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <li><a href="../../index.php">Home</a></li>
+                <!-- <li><a href="shop.php">Shop</a></li> -->
+                <li><a href="<?php echo $base_url ?>/pages/cart/cart.php">Cart</a></li>
+                <li><a href="<?php echo $base_url?>/pages/info/contact.php">Contact Us</a></li>
+                <li><a href="<?php echo $base_url?>/pages/info/about.php">About Us</a></li>
+
             </ul>
         </div>
 

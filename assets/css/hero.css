@@ -1,0 +1,62 @@
+.hero {
+    height: 420px;
+    background: linear-gradient(rgba(75,0,130,0.75), rgba(75,0,130,0.75)),
+        url('/ECOMMERCE/assets/images/hero-books.png') center/cover no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content {
+    width: 80%;
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero-buttons a {
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin: 0 8px;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #ffd700;
+    color: #4b0082;
+}
+
+.btn-primary:hover {
+    background: #ffcc00;
+}
+
+.btn-secondary {
+    background: white;
+    color: #4b0082;
+}
+
+.btn-secondary:hover {
+    background: #f3f3f3;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#books {
+    scroll-margin-top: 90px;
+}
+
